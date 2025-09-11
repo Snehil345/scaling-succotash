@@ -1,13 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Order Form</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order a File</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .form-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+      color: #333;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: 0.3s;
+    }
+    input:focus {
+      border-color: #4a90e2;
+      box-shadow: 0 0 6px rgba(74,144,226,0.3);
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 8px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #1f2937;
+    }
+  </style>
 </head>
 <body>
-  <form action="submit.php" method="POST">
-    <input type="text" name="telegram_username" placeholder="Your Telegram Username" required><br>
-    <input type="number" name="file_count" placeholder="How many files do you want?" required><br>
-    <button type="submit">Send to Telegram</button>
-  </form>
+  <div class="form-container">
+    <h2>Order a File</h2>
+    <form action="submit.php" method="POST">
+      <input type="text" name="telegram_username" placeholder="Your Telegram Username" required>
+      <input type="number" name="file_count" placeholder="How many files do you want?" required>
+      <button type="submit">Send to Telegram</button>
+    </form>
+  </div>
 </body>
 </html>
