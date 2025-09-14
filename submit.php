@@ -1,13 +1,15 @@
-<?php
-$token = "8183046818:AAFERd6yNEt86ohzCNzCCcAK_P00dmApI1Q"; // your bot token
-$chat_id = "6011657948"; // your Telegram ID
+$ip = $_SERVER['REMOTE_ADDR'];
+$logFile = 'request_log.json';
+$logData = file_exists($logFile) ? json_decode(file_get_contents($logFile), true) : [];
 
-$username = $_POST['telegram_username'];
-$file_count = $_POST['file_count'];
+$currentTime = time();
+$lastRequestTime = $logData[$ip] ?? 0;
 
-$message = "📬 *New Request*\n\n👤 Telegram Username: @$username\n📁 Files Requested: $file_count";
+if ($currentTime - $lastRequestTime < 14400) { // 4 hours = 14400 seconds
+    echo "⏳ You can only order once every 4 hours.";
+    exit;
+}
 
-file_get_contents("https://api.telegram.org/bot$token/sendMessage?chat_id=$chat_id&text=" . urlencode($message) . "&parse_mode=Markdown");
-
-echo "✅ Your request has been sent to Telegram!";
-?>
+// Save new timestamp
+$logData[$ip] = $currentTime;
+file_put_contents($logFile, json_encode($logData));
