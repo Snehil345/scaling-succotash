@@ -22,7 +22,46 @@ if (isset($orders[$username])) {
     $elapsed = time() - $orders[$username];
     if ($elapsed < 4 * 60 * 60) { // 4 hours = 14400 sec
         $remaining = ceil((4 * 60 * 60 - $elapsed) / 60);
-        echo "⏳ Sorry @$username, you must wait $remaining minutes before placing another order.";
+
+        // Show nice centered message
+        echo "
+        <!DOCTYPE html>
+        <html lang='en'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>Order Cooldown</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background: #f5f6fa;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    margin: 0;
+                }
+                .message-box {
+                    background: #fff;
+                    padding: 30px;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                    text-align: center;
+                    width: 350px;
+                }
+                h2 {
+                    color: #e11d48;
+                    font-size: 20px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class='message-box'>
+                <h2>⏳ Sorry @$username</h2>
+                <p>You must wait <b>$remaining minutes</b> before placing another order.</p>
+            </div>
+        </body>
+        </html>";
         exit;
     }
 }
@@ -37,6 +76,44 @@ file_get_contents("https://api.telegram.org/bot$token/sendMessage?chat_id=$chat_
 $orders[$username] = time();
 file_put_contents($storage_file, json_encode($orders));
 
-echo "✅ Your request has been sent to Telegram!";
+// Success message
+echo "
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Order Sent</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .message-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 350px;
+        }
+        h2 {
+            color: #16a34a;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class='message-box'>
+        <h2>✅ Order Sent</h2>
+        <p>Your request has been sent to Telegram!</p>
+    </div>
+</body>
+</html>";
 ?>
 
